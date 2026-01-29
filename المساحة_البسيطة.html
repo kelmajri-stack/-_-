@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 المساحة البسيطة - فكر بحرية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="محرك_التجريد_البصري.css">
+    <style>
+        /* الأنماط الأساسية */
+        :root {
+            --لون-السماء: #e3f2fd;
+            --لون-الأرض: #ffffff;
+            --لون-النمو: #4caf50;
+            --لون-التأمل: #9c27b0;
+            --لون-تحذير: #ff9800;
+            --ظل-لطيف: 0 8px 25px rgba(0, 0, 0, 0.08);
+            --دائرة-ناعمة: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.8;
+            min-height: 100vh;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .المساحة-الرئيسية {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: var(--لون-الأرض);
+            border-radius: var(--دائرة-ناعمة);
+            box-shadow: var(--ظل-لطيف);
+            overflow: hidden;
+            animation: ظهور-لطيف 0.8s ease;
+        }
+
+        @keyframes ظهور-لطيف {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .رأس-المساحة {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .رأس-المساحة::before {
+            content: '🧠';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .شعار-المساحة {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .وصف-المساحة {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .منطقة-الكتابة {
+            padding: 40px;
+        }
+
+        .تعليمات-سريعة {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-right: 5px solid var(--لون-النمو);
+        }
+
+        .محرر-النص {
+            width: 100%;
+            min-height: 300px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            font-size: 1.2rem;
+            font-family: inherit;
+            line-height: 1.8;
+            resize: vertical;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .محرر-النص:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .أدوات-التحكم {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .أداة {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .أداة:hover {
+            border-color: var(--لون-النمو);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .إحصائيات-حية {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .إحصائية {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-top: 4px solid #667eea;
+        }
+
+        .رسائل-النظام {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+            z-index: 1000;
+        }
+
+        .رسالة {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-right: 4px solid var(--لون-النمو);
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .المساحة-الرئيسية { margin: 10px; }
+            .منطقة-الكتابة { padding: 20px; }
+            .شعار-المساحة { font-size: 2rem; }
+            .أدوات-التحكم { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="خلفية-ديناميكية">
+    <div class="رسائل-النظام" id="رسائل-النظام"></div>
+
+    <div class="المساحة-الرئيسية">
+        <div class="رأس-المساحة">
+            <h1 class="شعار-المساحة">
+                <i class="fas fa-brain"></i>
+                <span class="نص-متلألئ">المساحة البسيطة</span>
+            </h1>
+            <p class="وصف-المساحة">
+                مكانك الآمن للتفكير الحر. اكتب كما يريد عقلك... الباقي علينا.
+            </p>
+        </div>
+
+        <div class="منطقة-الكتابة">
+            <div class="تعليمات-سريعة">
+                <h3><i class="fas fa-lightbulb"></i> القاعدة الوحيدة</h3>
+                <p>اكتب أفكارك بحرية. نحن نرتبها، نحفظها، وننظمها تلقائياً.</p>
+            </div>
+
+            <textarea 
+                class="محرر-النص" 
+                id="محرر-النص"
+                placeholder="ابدأ كتابة أفكارك هنا... دعها تتدفق بحرية."
+                autofocus
+            ></textarea>
+
+            <div class="أدوات-التحكم">
+                <div class="أداة" onclick="زرعالفكرة()">
+                    <i class="fas fa-seedling"></i>
+                    <div>زرع الفكرة</div>
+                    <small>حفظ في حديقتك</small>
+                </div>
+
+                <div class="أداة" onclick="مشاركةبسيطة()">
+                    <i class="fas fa-share-alt"></i>
+                    <div>مشاركة سريعة</div>
+                    <small>إرسال كرسالة</small>
+                </div>
+
+                <div class="أداة" onclick="تحويلإلىصورة()">
+                    <i class="fas fa-palette"></i>
+                    <div>تحويل فني</div>
+                    <small>صورة تعبيرية</small>
+                </div>
+
+                <div class="أداة" onclick="تبديلوضعالتأمل()">
+                    <i class="fas fa-moon"></i>
+                    <div>وضع التأمل</div>
+                    <small>بيئة هادئة</small>
+                </div>
+            </div>
+
+            <div class="إحصائيات-حية">
+                <div class="إحصائية">
+                    <div class="إحصائية-قيمة" id="عدد-الكلمات">0</div>
+                    <div class="إحصائية-تسمية">كلمة</div>
+                </div>
+                <div class="إحصائية">
+                    <div class="إحصائية-قيمة" id="عدد-الأفكار">0</div>
+                    <div class="إحصائية-تسمية">فكرة مزروعة</div>
+                </div>
+                <div class="إحصائية">
+                    <div class="إحصائية-قيمة" id="وقت-الكتابة">0</div>
+                    <div class="إحصائية-تسمية">دقيقة كتابة</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="نظام_الذكاء_الخفي.js"></script>
+    <script>
+        // النظام الرئيسي
+        const النظام = new نظامالمساحة();
+        let وضعتأمل = false;
+
+        // التهيئة
+        document.addEventListener('DOMContentLoaded', function() {
+            const نصمحفوظ = localStorage.getItem('المساحة_البسيطة_نص');
+            if (نصمحفوظ) {
+                document.getElementById('محرر-النص').value = نصمحفوظ;
+                تحديثالإحصائيات();
+            }
+            
+            عرضرسالة('مرحباً في مساحتك البسيطة! ✨', 'معلومة');
+            بدءموقتالكتابة();
+            
+            // إضافة عناصر تجريدية
+            إنشاءعناصرتجريدية();
+        });
+
+        // التفاعل مع الكتابة
+        document.getElementById('محرر-النص').addEventListener('input', function(e) {
+            const نص = e.target.value;
+            localStorage.setItem('المساحة_البسيطة_نص', نص);
+            تحديثالإحصائيات();
+            
+            if (نص.length % 300 === 0 && نص.length > 0) {
+                عرضرسالة('💾 حفظ تلقائي...', 'نجاح');
+            }
+        });
+
+        // الوظائف الرئيسية
+        function زرعالفكرة() {
+            const نص = document.getElementById('محرر-النص').value;
+            if (!نص.trim()) {
+                عرضرسالة('اكتب شيئاً أولاً!', 'تحذير');
+                return;
+            }
+            
+            const فكرة = النظام.زرعالفكرة(نص);
+            عرضرسالة(`🌱 زرعت فكرة جديدة: "${فكرة.تحليل.join('، ')}"`, 'نجاح');
+            
+            // تحديث العرض
+            document.getElementById('عدد-الأفكار').textContent = النظام.الأفكار.length;
+            إنشاءملفتحميل(فكرة);
+        }
+
+        function مشاركةبسيطة() {
+            const نص = document.getElementById('محرر-النص').value;
+            if (!نص.trim()) {
+                عرضرسالة('لا يوجد نص للمشاركة!', 'تحذير');
+                return;
+            }
+            
+            navigator.clipboard.writeText(نص)
+                .then(() => عرضرسالة('📋 تم نسخ النص للمشاركة!', 'نجاح'))
+                .catch(() => {
+                    const عنصر = document.createElement('textarea');
+                    عنصر.value = نص;
+                    document.body.appendChild(عنصر);
+                    عنصر.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(عنصر);
+                    عرضرسالة('📋 تم نسخ النص!', 'نجاح');
+                });
+        }
+
+        function تحويلإلىصورة() {
+            const نص = document.getElementById('محرر-النص').value;
+            if (!نص.trim()) {
+                عرضرسالة('اكتب شيئاً أولاً!', 'تحذير');
+                return;
+            }
+            
+            عرضرسالة('🎨 جاري تحويل فكرتك إلى عمل فني...', 'معلومة');
+            
+            setTimeout(() => {
+                // محاكاة التحويل
+                const تحليل = النظام.تحليلالفكرة(نص);
+                عرضرسالة(`✅ تم إنشاء صورة تعبر عن: ${تحليل.join('، ')}`, 'نجاح');
+            }, 2000);
+        }
+
+        function تبديلوضعالتأمل() {
+            وضعتأمل = !وضعتأمل;
+            
+            if (وضعتأمل) {
+                document.body.style.background = '#1a1a2e';
+                document.body.style.color = '#e0e0e0';
+                عرضرسالة('🧘 دخلت وضع التأمل... هدوء وإلهام', 'معلومة');
+            } else {
+                document.body.style.background = '';
+                document.body.style.color = '';
+                عرضرسالة('🌅 عدت للوضع العادي...', 'نجاح');
+            }
+        }
+
+        // دوال مساعدة
+        function تحديثالإحصائيات() {
+            const نص = document.getElementById('محرر-النص').value;
+            const كلمات = نص.trim() ? نص.split(/\s+/).length : 0;
+            document.getElementById('عدد-الكلمات').textContent = كلمات;
+        }
+
+        function عرضرسالة(نص, نوع) {
+            const مساحة = document.getElementById('رسائل-النظام');
+            const رسالة = document.createElement('div');
+            رسالة.className = `رسالة ${نوع}`;
+            
+            let أيقونة = 'fas fa-info-circle';
+            if (نوع === 'نجاح') أيقونة = 'fas fa-check-circle';
+            if (نوع === 'تحذير') أيقونة = 'fas fa-exclamation-triangle';
+            
+            رسالة.innerHTML = `<i class="${أيقونة}"></i><div>${نص}</div>`;
+            مساحة.appendChild(رسالة);
+            
+            setTimeout(() => {
+                رسالة.style.opacity = '0';
+                setTimeout(() => {
+                    if (رسالة.parentNode) مساحة.removeChild(رسالة);
+                }, 300);
+            }, 5000);
+        }
+
+        function بدءموقتالكتابة() {
+            setInterval(() => {
+                const نص = document.getElementById('محرر-النص').value;
+                if (نص.trim()) {
+                    const الوقت = parseInt(document.getElementById('وقت-الكتابة').textContent) || 0;
+                    document.getElementById('وقت-الكتابة').textContent = الوقت + 1;
+                }
+            }, 60000);
+        }
+
+        function إنشاءملفتحميل(فكرة) {
+            const محتوى = `فكرة من المساحة البسيطة\nتاريخ: ${فكرة.تاريخ}\n\n${فكرة.نص}`;
+            const blob = new Blob([محتوى], { type: 'text/plain;charset=utf-8' });
+            const رابط = document.createElement('a');
+            رابط.href = URL.createObjectURL(blob);
+            رابط.download = `فكرة_${new Date().getTime()}.txt`;
+            رابط.click();
+        }
+
+        function إنشاءعناصرتجريدية() {
+            for (let i = 0; i < 5; i++) {
+                const عنصر = document.createElement('div');
+                عنصر.className = 'فقاعة-فكر';
+                عنصر.style.left = `${Math.random() * 100}%`;
+                عنصر.style.animationDelay = `${i * 3}s`;
+                document.body.appendChild(عنصر);
+            }
+        }
+    </script>
+</body>
+</html>

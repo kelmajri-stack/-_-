@@ -1,0 +1,151 @@
+/* محرك_التجريد_البصري.css */
+/* الأنماط الجمالية للمساحة */
+
+:root {
+    --لون-السماء: #e3f2fd;
+    --لون-الأرض: #ffffff;
+    --لون-النمو: #4caf50;
+    --لون-التأمل: #9c27b0;
+    --لون-إلهام: #2196f3;
+    --لون-هدوء: #009688;
+    
+    --ظل-لطيف: 0 8px 25px rgba(0, 0, 0, 0.08);
+    --ظل-عميق: 0 15px 35px rgba(0, 0, 0, 0.12);
+    
+    --دائرة-ناعمة: 16px;
+    --دائرة-ناعمة-اكثر: 24px;
+    
+    --تحوّل-لطيف: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* تأثيرات خاصة للمساحة */
+.وميض-لطيف {
+    animation: وميض 2s infinite alternate;
+}
+
+@keyframes وميض {
+    0% { opacity: 0.9; }
+    100% { opacity: 1; }
+}
+
+.طفو-هادئ {
+    animation: طفو 3s ease-in-out infinite;
+}
+
+@keyframes طفو {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.تموج-لطيف {
+    animation: تموج 4s ease-in-out infinite;
+}
+
+@keyframes تموج {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* تدرجات جميلة */
+.تدرج-سماء {
+    background: linear-gradient(135deg, var(--لون-السماء) 0%, #bbdefb 100%);
+}
+
+.تدرج-أرض {
+    background: linear-gradient(135deg, var(--لون-الأرض) 0%, #f5f5f5 100%);
+}
+
+.تدرج-نمو {
+    background: linear-gradient(135deg, var(--لون-النمو) 0%, #81c784 100%);
+}
+
+.تدرج-تأمل {
+    background: linear-gradient(135deg, var(--لون-التأمل) 0%, #ba68c8 100%);
+}
+
+/* عناصر تجريدية */
+.عنصر-تجريدي {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+    filter: blur(20px);
+    z-index: -1;
+}
+
+.فقاعة-فكر {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--لون-إلهام), transparent);
+    animation: تدفق 15s linear infinite;
+}
+
+@keyframes تدفق {
+    0% { transform: translateY(100vh) translateX(0); }
+    100% { transform: translateY(-100px) translateX(100px); }
+}
+
+/* تأثيرات نصية */
+.نص-متلألئ {
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: تلألؤ 3s ease infinite;
+}
+
+@keyframes تلألؤ {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* حدود جميلة */
+.حد-ناعم {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--لون-الأرض), var(--لون-الأرض)) padding-box,
+                linear-gradient(135deg, var(--لون-النمو), var(--لون-إلهام)) border-box;
+}
+
+/* ظلال متحركة */
+.ظل-متحرك {
+    box-shadow: var(--ظل-لطيف);
+    transition: var(--تحوّل-لطيف);
+}
+
+.ظل-متحرك:hover {
+    box-shadow: var(--ظل-عميق);
+}
+
+/* خلفيات ديناميكية */
+.خلفية-ديناميكية {
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(76, 175, 80, 0.05) 0%, transparent 50%),
+        linear-gradient(135deg, var(--لون-السماء) 0%, #c3cfe2 100%);
+}
+
+/* تأثيرات للوضع الداكن */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --لون-السماء: #1a1a2e;
+        --لون-الأرض: #16213e;
+        --لون-النمو: #4caf50;
+        --لون-التأمل: #9c27b0;
+    }
+}
+
+/* طباعة أنيقة */
+@media print {
+    .المساحة-الرئيسية {
+        box-shadow: none;
+        margin: 0;
+    }
+    
+    .أدوات-التحكم,
+    .رسائل-النظام {
+        display: none;
+    }
+}
