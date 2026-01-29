@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساحة البسيطة - منصة التفكير الحر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            flex: 1;
+        }
+
+        .thought-input-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .input-header h2 {
+            font-size: 1.5rem;
+            color: #38bdf8;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        #thoughtInput {
+            flex: 1;
+            background-color: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            color: #f1f5f9;
+            font-size: 1.1rem;
+            padding: 20px;
+            resize: none;
+            transition: all 0.3s ease;
+            line-height: 1.7;
+        }
+
+        #thoughtInput:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(148, 163, 184, 0.3);
+        }
+
+        .btn-danger {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        .btn-danger:hover {
+            background-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .recent-thoughts {
+            background-color: rgba(15, 23, 42, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .recent-thoughts h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #818cf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #thoughtList {
+            list-style-type: none;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .thought-item {
+            padding: 15px;
+            background-color: rgba(30, 41, 59, 0.5);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-right: 4px solid #38bdf8;
+            position: relative;
+        }
+
+        .thought-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .thought-text {
+            margin-bottom: 10px;
+            color: #e2e8f0;
+        }
+
+        .thought-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .thought-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover {
+            color: #38bdf8;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(226, 232, 240, 0.1);
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .instructions {
+            background-color: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-right: 4px solid #10b981;
+        }
+
+        .instructions h3 {
+            color: #10b981;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions ul {
+            padding-right: 20px;
+            color: #cbd5e1;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-brain"></i> المساحة البسيطة</h1>
+            <p class="tagline">منصة للتفكير الحر دون قيود تقنية. اكتب أفكارك بحرية... الباقي علينا.</p>
+        </header>
+
+        <div class="main-area">
+            <div class="thought-input-area">
+                <div class="input-header">
+                    <h2><i class="fas fa-pen-nib"></i> ماذا يدور في خلدك الآن؟</h2>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span id="saveStatus">جاهز للحفظ التلقائي</span>
+                    </div>
+                </div>
+                <textarea id="thoughtInput" placeholder="لا تفكر كثيراً... فقط ابدأ في الكتابة. كل ما تكتبه سيُحفظ تلقائياً." rows="12"></textarea>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" id="saveBtn">
+                        <i class="fas fa-save"></i> حفظ الأفكار
+                    </button>
+                    <button class="btn btn-secondary" id="clearBtn">
+                        <i class="fas fa-eraser"></i> مسح النص
+                    </button>
+                    <button class="btn btn-danger" id="clearAllBtn">
+                        <i class="fas fa-trash-alt"></i> مسح الكل
+                    </button>
+                </div>
+            </div>
+
+            <div class="recent-thoughts">
+                <h2><i class="fas fa-history"></i> أفكارك الأخيرة</h2>
+                <ul id="thoughtList">
+                    <!-- سيتم عرض الأفكار المحفوظة هنا تلقائياً -->
+                </ul>
+            </div>
+
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> كيف تعمل المنصة؟</h3>
+                <ul>
+                    <li>اكتب في المنطقة أعلاه - سيتم حفظ أفكارك تلقائياً في متصفحك.</li>
+                    <li>لا تفقد أفكارك أبداً - حتى إذا أغلقت المتصفح، تبقى أفكارك محفوظة.</li>
+                    <li>يمكنك استعادة أي فكرة سابقة بالنقر عليها.</li>
+                    <li>المساحة مصممة للتركيز - واجهة نظيفة، بدون تشتيت.</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>منصة "المساحة البسيطة" - لحماية الإبداع من الغرق في بحر التقنية</p>
+            <p>التعلم أثناء الأداء - الجولة الثانية بقيادة ديب</p>
+        </footer>
+    </div>
+
+    <script>
+        // العناصر الأساسية في الصفحة
+        const thoughtInput = document.getElementById('thoughtInput');
+        const saveBtn = document.getElementById('saveBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const thoughtList = document.getElementById('thoughtList');
+        const saveStatus = document.getElementById('saveStatus');
+
+        // مفتاح التخزين في localStorage
+        const STORAGE_KEY = 'simple-space-thoughts';
+        const CURRENT_THOUGHT_KEY = 'simple-space-current';
+
+        // تحميل النص الحالي من التخزين عند فتح الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCurrentThought();
+            loadSavedThoughts();
+        });
+
+        // تحميل النص الذي كان يكتبه المستخدم
+        function loadCurrentThought() {
+            const current = localStorage.getItem(CURRENT_THOUGHT_KEY);
+            if (current) {
+                thoughtInput.value = current;
+            }
+        }
+
+        // حفظ النص الحالي تلقائياً مع الكتابة
+        thoughtInput.addEventListener('input', () => {
+            localStorage.setItem(CURRENT_THOUGHT_KEY, thoughtInput.value);
+            updateSaveStatus('تم الحفظ تلقائياً', 'success');
+        });
+
+        // تحديث حالة الحفظ
+        function updateSaveStatus(message, type) {
+            saveStatus.textContent = message;
+            
+            if (type === 'success') {
+                saveStatus.style.color = '#10b981';
+            } else if (type === 'error') {
+                saveStatus.style.color = '#ef4444';
+            } else {
+                saveStatus.style.color = '#94a3b8';
+            }
+            
+            // إعادة التعيين بعد 3 ثوان
+            setTimeout(() => {
+                saveStatus.textContent = 'جاهز للحفظ التلقائي';
+                saveStatus.style.color = '#94a3b8';
+            }, 3000);
+        }
+
+        // حفظ الفكرة في القائمة
+        function saveThought() {
+            const text = thoughtInput.value.trim();
+            
+            if (!text) {
+                updateSaveStatus('اكتب شيئاً أولاً!', 'error');
+                return;
+            }
+            
+            // الحصول على الأفكار الحالية
+            let thoughts = getSavedThoughts();
+            
+            // إضافة الفكرة الجديدة
+            const newThought = {
+                id: Date.now(),
+                text: text,
+                timestamp: new Date().toLocaleString('ar-SA')
+            };
+            
+            thoughts.unshift(newThought); // إضافة في البداية
+            
+            // حفظ في localStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(thoughts));
+            
+            // تحديث العرض
+            renderThoughts();
+            
+            // مسح حقل الإدخال
+            thoughtInput.value = '';
+            localStorage.removeItem(CURRENT_THOUGHT_KEY);
+            
+            updateSaveStatus('تم حفظ الفكرة بنجاح!', 'success');
+        }
+
+        // الحصول على الأفكار المحفوظة
+        function getSavedThoughts() {
+            const thoughtsJSON = localStorage.getItem(STORAGE_KEY);
+            return thoughtsJSON ? JSON.parse(thoughtsJSON) : [];
+        }
+
+        // عرض الأفكار المحفوظة
+        function renderThoughts() {
+            const thoughts = getSavedThoughts();
+            
+            if (thoughts.length === 0) {
+                thoughtList.innerHTML = '<li class="thought-item"><div class="thought-text">لا توجد أفكار محفوظة بعد. ابدأ بالكتابة!</div></li>';
+                return;
+            }
+            
+            thoughtList.innerHTML = thoughts.map(thought => `
+                <li class="thought-item" data-id="${thought.id}">
+                    <div class="thought-text">${thought.text}</div>
+                    <div class="thought-meta">
+                        <span><i class="far fa-clock"></i> ${thought.timestamp}</span>
+                        <span>#${thought.id.toString().slice(-4)}</span>
+                    </div>
+                    <div class="thought-actions">
+                        <button class="action-btn restore-btn" title="استعادة">
+                            <i class="fas fa-redo"></i> استعادة
+                        </button>
+                        <button class="action-btn delete-btn" title="حذف">
+                            <i class="far fa-trash-alt"></i> حذف
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+            
+            // إضافة مستمعي الأحداث للأزرار
+            document.querySelectorAll('.restore-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const thoughtId = parseInt(this.closest('.thought-item').dataset.id);
+                    restoreThought(thoughtId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const thoughtId = parseInt(this.closest('.thought-item').dataset.id);
+                    deleteThought(thoughtId);
+                });
+            });
+            
+            // استعادة النص بالنقر على الفكرة
+            document.querySelectorAll('.thought-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!e.target.classList.contains('restore-btn') && !e.target.classList.contains('delete-btn')) {
+                        const thoughtId = parseInt(this.dataset.id);
+                        restoreThought(thoughtId);
+                    }
+                });
+            });
+        }
+
+        // استعادة فكرة
+        function restoreThought(id) {
+            const thoughts = getSavedThoughts();
+            const thought = thoughts.find(t => t.id === id);
+            
+            if (thought) {
+                thoughtInput.value = thought.text;
+                localStorage.setItem(CURRENT_THOUGHT_KEY, thought.text);
+                updateSaveStatus('تم استعادة الفكرة', 'success');
+                
+                // تمرير المؤشر للنهاية
+                thoughtInput.focus();
+                thoughtInput.setSelectionRange(thought.text.length, thought.text.length);
+            }
+        }
+
+        // حذف فكرة
+        function deleteThought(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه الفكرة؟')) return;
+            
+            let thoughts = getSavedThoughts();
+            thoughts = thoughts.filter(t => t.id !== id);
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(thoughts));
+            renderThoughts();
+            
+            updateSaveStatus('تم حذف الفكرة', 'error');
+        }
+
+        // تحميل الأفكار عند فتح الصفحة
+        function loadSavedThoughts() {
+            renderThoughts();
+        }
+
+        // أحداث الأزرار
+        saveBtn.addEventListener('click', saveThought);
+        
+        clearBtn.addEventListener('click', () => {
+            thoughtInput.value = '';
+            localStorage.removeItem(CURRENT_THOUGHT_KEY);
+            updateSaveStatus('تم مسح النص', 'error');
+            thoughtInput.focus();
+        });
+        
+        clearAllBtn.addEventListener('click', () => {
+            if (!confirm('هل أنت متأكد من مسح كل الأفكار المحفوظة؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+            
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(CURRENT_THOUGHT_KEY);
+            thoughtInput.value = '';
+            renderThoughts();
+            updateSaveStatus('تم مسح كل الأفكار', 'error');
+        });
+
+        // اختصار لوحة المفاتيح: Ctrl+Enter لحفظ
+        thoughtInput.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                saveThought();
+            }
+        });
+
+        // تحديث حالة الحفظ عند التركيز
+        thoughtInput.addEventListener('focus', () => {
+            updateSaveStatus('يكتب الآن...', 'success');
+        });
+    </script>
+</body>
+</html>
